@@ -1187,20 +1187,29 @@ class KafkaConsumer(six.Iterator):
         # Now that the heartbeat thread runs in the background
         # there should be no reason to maintain a separate iterator
         # but we'll keep it available for a few releases just in case
+        print("Uno")
         if self.config['legacy_iterator']:
+            print("Dos")
             return self.next_v1()
         else:
+            print("Tres")
             return self.next_v2()
 
     def next_v2(self):
+        print("Cuatro")
         self._set_consumer_timeout()
+        print("Cinco")
         while time.time() < self._consumer_timeout:
+            print("Seis")
             if not self._iterator:
                 self._iterator = self._message_generator_v2()
             try:
+                print("Siete")
                 return next(self._iterator)
             except StopIteration:
+                print("Ocho")
                 self._iterator = None
+        print("Nueve")
         raise StopIteration()
 
     def next_v1(self):
